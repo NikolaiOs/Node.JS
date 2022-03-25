@@ -1,34 +1,20 @@
-const colors = require('colors');
+console.log('Record 1');
 
-const primeNumber = () => {
-    let start = 2;
-    let end = 100;
+setTimeout(() => {
+    console.log('Record 2');
 
-    for (let i = start; i <= end; i++) {
-        let foo = true;
+    Promise.resolve().then(() => {
+        setTimeout(() => {
+            сonsole.log('Record 3');
+            Promise.resolve().then(() => {
+                console.log('Record 4');
+            });
+        });
+    });
+});
 
-        for (let j = 2; j < i; j++) {
-            if (i % j === 0) {
-                foo = false;
-                break;
-            }
-        }
+console.log('Record 5');
 
-        if (foo) {
-            printColor(i)
-        }
+Promise.resolve().then(() => Promise.resolve().then(() => console.log('Record 6')));
 
-    }
-};
-
-const printColor = (i) => {
-    if (i % 3 === 0) {
-        console.log(colors.yellow(i));
-    } else if ((i + 1) % 3 === 0) {
-        console.log(colors.green(i));
-    } else  {
-        console.log(colors.red(i));
-    }
-};
-
-primeNumber();
+// 1 5 6 2 3 4
