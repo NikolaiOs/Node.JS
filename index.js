@@ -1,70 +1,32 @@
-// console.log('Record 1');
-//
-// setTimeout(() => {
-//     console.log('Record 2');
-//
-//     Promise.resolve().then(() => {
-//         setTimeout(() => {
-//             сonsole.log('Record 3');
-//             Promise.resolve().then(() => {
-//                 console.log('Record 4');
-//             });
-//         });
-//     });
-// });
-//
-// console.log('Record 5');
-//
-// Promise.resolve().then(() => Promise.resolve().then(() => console.log('Record 6')));
+const fs = require('fs');
+const readline = require('readline');
 
-// 1 5 6 2 3 4
+const readStream = fs.createReadStream('../access.log', 'utf8');
 
-const EventEmitter = require('events');
+readStream.on('data', (line) => {
+    console.log('89.123.1.41');
+    console.log(line.includes('89.123.1.41'));
+    console.log('34.48.240.111');
+    console.log(line.includes('34.48.240.111'));
+});
 
-let timerShow = {};
+readStream.on('end', () => console.log('File reading finished'));
+readStream.on('error', () => console.log(err));
 
-function  diffSubtract(date1, date2) {
-    return date2 - date1;
-};
+const writeStream1 = fs.createWriteStream('./89.123.1.41_requests.log', 'utf8');
+const writeStream2 = fs.createWriteStream('./34.48.240.111_requests.log', 'utf8');
 
-let endDate = {
-    "full_year": "2029",
-    "month": "03",
-    "day": "28",
-    "hours": "00",
-    "minutes": "00",
-    "seconds": "00"
-};
+const rl = readline.createInterface({
+    input: readStream
+});
 
-let endDateStr = `${endDate.full_year}-${endDate.month}-${endDate.day}T${endDate.hours}:${endDate.minutes}:${endDate.seconds}`;
-
-timer = setInterval(function () {
-
-    let now = new Date();
-
-    let date = new Date(endDateStr);
-
-    let ms_left = diffSubtract(now, date);
-
-    if (ms_left <= 0) {
-
-        emitter.emit('timerEnd');
-
-    } else {
-
-        let res = new Date(ms_left);
-
-        let str_timer = `${res.getUTCFullYear() - 1970}.${res.getUTCMonth()}.${res.getUTCDate() - 1} ${res.getUTCHours()}:${res.getUTCMinutes()}:${res.getUTCSeconds()}`;
-
-        timerShow = str_timer;
-        console.clear();
-        console.log(timerShow);
+rl.on('line', (line) => {
+    if (line.includes('89.123.1.41')) {
+        writeStream1.write(line);
+        writeStream1.write('\n');
     }
-}, 1000);
-
-const emitter = new EventEmitter();
-
-emitter.on('timerEnd', () => {
-    clearInterval(timer);
-    console.log("Время закончилось");
+    if (line.includes('34.48.240.111')) {
+        writeStream2.write(line);
+        writeStream2.write('\n');
+    }
 });
