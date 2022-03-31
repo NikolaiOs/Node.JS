@@ -1,7 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 const inquirer = require("inquirer");
-// const yargs = require("yargs");
+const yargs = require("yargs");
+
+// const [ fileName ] = process.argv.slice(2);
+//
+// fs.readFile(fileName, 'utf-8', (err, data) => {
+//     if (err)
+//         return console.log(err);
+//     console.log(data);
+// });
 
 const currentDirectory = process.cwd();
 
@@ -17,25 +25,24 @@ const currentDirectory = process.cwd();
 //     }
 // }
 
-
-
-const isFile = fileName => {
-    return fs.lstatSync(fileName).isFile();
-};
-
-const list = fs.readdirSync(currentDirectory).filter(isFile);
-inquirer
-    .prompt([
-        {
-            name: "fileName",
-            type: "list",
-            message: "Choose file:",
-            choices: list,
-        },
-    ])
-    .then((answer) => {
-        const filePath = path.join(currentDirectory, answer.fileName);
-        fs.readFile(filePath,'utf8', (err, data) => {
-            console.log(data);
-        });
-    });
+// const isFile = fileName => {
+//
+//     return fs.lstatSync(fileName).isFile();
+// };
+//
+// const list = fs.readdirSync(currentDirectory).filter(isFile);
+// inquirer
+//     .prompt([
+//         {
+//             name: "fileName",
+//             type: "list",
+//             message: "Choose file:",
+//             choices: list,
+//         },
+//     ])
+//     .then((answer) => {
+//         const filePath = path.join(currentDirectory, answer.fileName);
+//         fs.readFile(filePath,'utf8', (err, data) => {
+//             console.log(data);
+//         });
+//     });
