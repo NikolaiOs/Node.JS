@@ -1,5 +1,8 @@
 <!doctype html>
 <html lang="en">
+
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,11 +11,35 @@
     <link rel="stylesheet" href="style.css">
     <title>Cli</title>
 </head>
+
 <body>
 <div class="content">
     <ul class="list">
         #links
     </ul>
 </div>
+<input type="text" id="input" autofocus>
+<input type="submit" id="send" value="Send">
+<div id="messages"></div>
 </body>
+
+<script type="text/javascript">
+    const socket = io('localhost:3000');
+    const addMessage = (msg) => {
+        const msgSpan = document.createElement('span').innerHTML = msg;
+        document.getElementById('messages').append(msgSpan);
+        document.getElementById('messages').append(document.createElement('br'));
+    };
+    socket.on('connect', function() {
+        console.log('Successful connected to server');
+    });
+    socket.on('SERVER_MSG', function (data) {
+        addMessage(data.msg);
+    });
+    document.getElementById('send').onclick = function() {
+        socket.emit('CLIENT_MSG', { msg: document.getElementById('input').value });
+        document.getElementById('input').value = '';
+    };
+</script>
+
 </html>

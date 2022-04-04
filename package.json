@@ -23,6 +23,7 @@
   "dependencies": {
     "colors": "^1.4.0",
     "inquirer": "^8.2.2",
+    "socket.io": "^4.4.1",
     "yargs": "^17.4.0"
   }
 }
