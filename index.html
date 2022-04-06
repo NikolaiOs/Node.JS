@@ -1,15 +1,13 @@
 <!doctype html>
 <html lang="en">
-
-<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>Cli</title>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+    <title>cli</title>
 </head>
 
 <body>
@@ -18,6 +16,7 @@
         #links
     </ul>
 </div>
+
 <input type="text" id="input" autofocus>
 <input type="submit" id="send" value="Send">
 <div id="messages"></div>
@@ -33,6 +32,8 @@
     socket.on('connect', function() {
         console.log('Successful connected to server');
     });
+
+
     socket.on('SERVER_MSG', function (data) {
         addMessage(data.msg);
     });
